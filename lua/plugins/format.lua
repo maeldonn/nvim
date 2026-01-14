@@ -7,37 +7,34 @@ return {
       {
         '<leader>f',
         function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
+          require('conform').format { lsp_fallback = true, async = false, timeout_ms = 1000 }
         end,
         mode = '',
-        desc = '[F]ormat buffer',
+        desc = '[F]ormat buffer or selection',
       },
     },
     opts = {
-      notify_on_error = false,
       format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { javascript = true, typescript = true }
-        local lsp_format_opt
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          lsp_format_opt = 'never'
-        else
-          lsp_format_opt = 'fallback'
+        local allowed_filetypes = { go = true, lua = true }
+        local ft = vim.bo[bufnr].filetype
+
+        if not allowed_filetypes[ft] then
+          return
         end
-        return {
-          timeout_ms = 500,
-          lsp_format = lsp_format_opt,
-        }
+
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+          return
+        end
+
+        return { timeout_ms = 500, lsp_format = 'fallback' }
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        javascript = { 'prettier' },
-        typescript = { 'prettier' },
+        go = { 'goimports', 'gofmt' },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
         md = { 'prettier' },
         json = { 'prettier' },
-        css = { 'prettier' },
       },
     },
   },
