@@ -17,8 +17,6 @@ return {
       'markdown',
       'javascript',
       'typescript',
-      'css',
-      'vue',
     },
     highlight = {
       enable = true,
