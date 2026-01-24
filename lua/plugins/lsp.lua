@@ -63,7 +63,7 @@ return {
           vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
         end
 
-        map('n', 'K', '<cmd>Lspsaga hover_doc ++quiet<CR>', 'Hover documentation')
+        map('n', 'K', vim.lsp.buf.hover, 'Hover documentation')
         map('n', 'gd', vim.lsp.buf.definition, '[G]o to [D]efinition')
         map('n', 'gD', vim.lsp.buf.declaration, '[G]o to [D]eclaration')
         map('n', 'gt', vim.lsp.buf.type_definition, '[G]o to [T]ype definition')
