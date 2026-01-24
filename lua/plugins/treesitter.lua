@@ -1,9 +1,9 @@
 return {
   'nvim-treesitter/nvim-treesitter',
+  lazy = false,
   build = ':TSUpdate',
-  opts = {
-    auto_install = true,
-    ensure_installed = {
+  config = function()
+    require('nvim-treesitter').install {
       'vim',
       'lua',
       'bash',
@@ -17,13 +17,26 @@ return {
       'markdown',
       'javascript',
       'typescript',
-    },
-    highlight = {
-      enable = true,
-      disable = { '' },
-      additional_vim_regex_highlighting = false,
-    },
-    indent = { enable = true, disable = { 'yaml' } },
-    autotag = { enable = true },
-  },
+      'jsdoc',
+    }
+
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = '*',
+      callback = function(args)
+        local ft = vim.bo[args.buf].filetype
+        local lang = vim.treesitter.language.get_lang(ft)
+        if not lang then
+          return
+        end
+
+        -- Start only if a parser can actually be created for this buffer/lang
+        local ok = pcall(vim.treesitter.get_parser, args.buf, lang)
+        if not ok then
+          return
+        end
+
+        pcall(vim.treesitter.start, args.buf, lang)
+      end,
+    })
+  end,
 }
