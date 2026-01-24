@@ -13,7 +13,7 @@ return {
   },
   keys = {
     { '<leader>sf', require('telescope.builtin').find_files, desc = '[S]earch [F]iles' },
-    { '<C-p>', require('telescope.builtin').git_files, desc = '[C-p] Search git files' },
+    { '<leader>sF', require('telescope.builtin').git_files, desc = '[C-p] Search git files' },
     { '<leader>sw', require('telescope.builtin').grep_string, desc = '[S]earch current [W]ord' },
     { '<leader>sg', require('telescope.builtin').live_grep, desc = '[S]earch by [G]rep' },
     { '<leader>sd', require('telescope.builtin').diagnostics, desc = '[S]earch [D]iagnostics' },
@@ -24,10 +24,43 @@ return {
     local telescope = require 'telescope'
 
     telescope.setup {
+      defaults = {
+        vimgrep_arguments = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '--hidden',
+          '--glob',
+          '!**/.git/*',
+          '--glob',
+          '!**/node_modules/*',
+          '--glob',
+          '!**/vendor/*',
+          '--glob',
+          '!**/gen/*',
+        },
+      },
       pickers = {
         find_files = {
           theme = 'dropdown',
           previewer = false,
+          find_command = {
+            'rg',
+            '--files',
+            '--hidden',
+            '--glob',
+            '!**/.git/*',
+            '--glob',
+            '!**/node_modules/*',
+            '--glob',
+            '!**/vendor/*',
+            '--glob',
+            '!**/gen/*',
+          },
         },
         git_files = {
           theme = 'dropdown',
