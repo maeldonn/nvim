@@ -11,7 +11,6 @@ return {
       snippets = { preset = 'luasnip' },
       completion = {
         menu = {
-          border = 'rounded',
           draw = {
             components = {
               kind_icon = {
@@ -58,9 +57,6 @@ return {
     'neovim/nvim-lspconfig',
     cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
     event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = {
-      { 'mason-org/mason-lspconfig.nvim' },
-    },
     config = function()
       local function setup_keymaps(bufnr)
         local function map(mode, lhs, rhs, desc)
@@ -109,6 +105,12 @@ return {
   },
   {
     'mason-org/mason-lspconfig.nvim',
+    dependencies = {
+      {
+        'mason-org/mason.nvim',
+        config = true,
+      },
+    },
     opts = {
       ensure_installed = {
         'lua_ls',
@@ -116,25 +118,11 @@ return {
         'vtsls',
       },
     },
-    dependencies = {
-      { 'neovim/nvim-lspconfig' },
-      {
-        'mason-org/mason.nvim',
-        opts = {
-          ui = {
-            border = 'rounded',
-          },
-        },
-      },
-    },
   },
   {
     'glepnir/lspsaga.nvim',
     opts = {
-      ui = {
-        border = 'rounded',
-        code_action = ' ',
-      },
+      ui = { code_action = ' ' },
       lightbulb = { enable = false },
       symbol_in_winbar = { enable = false },
     },

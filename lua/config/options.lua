@@ -4,6 +4,7 @@ vim.g.maplocalleader = ' '
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
+vim.o.winborder = 'rounded'
 
 vim.opt.mouse = 'a'
 
