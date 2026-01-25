@@ -1,16 +1,17 @@
 return {
   'zbirenbaum/copilot.lua',
   cmd = 'Copilot',
+  build = ':Copilot auth',
   event = 'InsertEnter',
   dependencies = { 'nvim-lua/plenary.nvim' },
-  keys = {
-    { '<C-l>', require('copilot.suggestion').accept_line, desc = 'Accept [L]ine' },
-    { '<C-j>', require('copilot.suggestion').accept,      desc = 'Accept suggestion' },
+  opts = {
+    panel = { enabled = false },
+    suggestion = {
+      auto_trigger = true,
+      keymap = {
+        accept = '<C-j>',
+        accept_line = '<C-l>',
+      },
+    },
   },
-  init = function()
-    vim.g.copilot_no_tab_map = true
-  end,
-  config = function()
-    require('copilot').setup {}
-  end,
 }
