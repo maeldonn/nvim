@@ -18,6 +18,7 @@ return {
     { '<leader>sg', require('telescope.builtin').live_grep, desc = '[S]earch by [G]rep' },
     { '<leader>sd', require('telescope.builtin').diagnostics, desc = '[S]earch [D]iagnostics' },
     { '<leader>sr', require('telescope.builtin').resume, desc = '[S]earch [R]esume' },
+    { '<leader>gs', require('telescope.builtin').git_status, desc = '[G]it [S]tatus' },
     { '<leader><leader>', require('telescope.builtin').buffers, desc = '[ ] Find existing buffers' },
   },
   config = function()
@@ -73,6 +74,9 @@ return {
           initial_mode = 'normal',
         },
         resume = {
+          initial_mode = 'normal',
+        },
+        git_status = {
           initial_mode = 'normal',
         },
         buffers = {
