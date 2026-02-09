@@ -14,7 +14,7 @@ return {
   keys = {
     { '<leader>sf', require('telescope.builtin').find_files, desc = '[S]earch [F]iles' },
     { '<leader>sF', require('telescope.builtin').git_files, desc = '[C-p] Search git files' },
-    { '<leader>sw', require('telescope.builtin').grep_string, desc = '[S]earch current [W]ord' },
+    { '<leader>sw', require('telescope.builtin').grep_string, mode = { 'n', 'v' }, desc = '[S]earch current [W]ord' },
     { '<leader>sg', require('telescope.builtin').live_grep, desc = '[S]earch by [G]rep' },
     { '<leader>sd', require('telescope.builtin').diagnostics, desc = '[S]earch [D]iagnostics' },
     { '<leader>sr', require('telescope.builtin').resume, desc = '[S]earch [R]esume' },
