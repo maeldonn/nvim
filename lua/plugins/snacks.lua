@@ -3,7 +3,11 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
+    bigfile = {},
     explorer = { replace_netrw = true, trash = true },
+    input = {},
+    quickfile = {},
+    statuscolumn = {},
   },
   keys = {
     -- Explore
