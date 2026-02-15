@@ -78,22 +78,22 @@ return {
         map('i', '<C-h>', vim.lsp.buf.signature_help, 'Signature help')
         map('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
         map('n', 'gd', function()
-          require('snacks.picker').lsp_definitions { focus = 'list' }
+          require('snacks.picker').lsp_definitions { focus = 'list', layout = 'ivy' }
         end, '[G]o to [D]efinition')
         map('n', 'gD', function()
-          require('snacks.picker').lsp_declarations { focus = 'list' }
+          require('snacks.picker').lsp_declarations { focus = 'list', layout = 'ivy' }
         end, '[G]o to [D]eclaration')
         map('n', 'gt', function()
-          require('snacks.picker').lsp_type_definitions { focus = 'list' }
+          require('snacks.picker').lsp_type_definitions { focus = 'list', layout = 'ivy' }
         end, '[G]o to [T]ype definition')
         map('n', 'gi', function()
-          require('snacks.picker').lsp_implementations { focus = 'list' }
+          require('snacks.picker').lsp_implementations { focus = 'list', layout = 'ivy' }
         end, '[G]o to [I]mplementation')
         map('n', 'gr', function()
-          require('snacks.picker').lsp_references { focus = 'list' }
+          require('snacks.picker').lsp_references { focus = 'list', layout = 'ivy' }
         end, '[G]o to [R]eferences')
         map('n', '<leader>so', function()
-          require('snacks.picker').lsp_symbols { focus = 'list' }
+          require('snacks.picker').lsp_symbols { focus = 'list', layout = 'right' }
         end, '[S]ymbol [O]utline')
       end
 
