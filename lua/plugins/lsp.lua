@@ -72,18 +72,29 @@ return {
         end
 
         map('n', 'K', vim.lsp.buf.hover, 'Hover documentation')
-        map('n', 'gd', vim.lsp.buf.definition, '[G]o to [D]efinition')
-        map('n', 'gD', vim.lsp.buf.declaration, '[G]o to [D]eclaration')
-        map('n', 'gt', vim.lsp.buf.type_definition, '[G]o to [T]ype definition')
-        map('n', 'gi', vim.lsp.buf.implementation, '[G]o to [I]mplementation')
-        map('n', 'gr', vim.lsp.buf.references, '[G]o to [R]eferences')
         map('n', 'grn', vim.lsp.buf.rename, 'Rename')
-        map('n', 'gu', '<cmd>Lspsaga finder<CR>', '[G]o to [U]sage')
-        map('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous diagnostic')
-        map('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next diagnostic')
+        map('n', '[d', vim.diagnostic.get_prev, 'Previous diagnostic')
+        map('n', '[d', vim.diagnostic.get_next, 'Next diagnostic')
         map('i', '<C-h>', vim.lsp.buf.signature_help, 'Signature help')
-        map('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>', '[C]ode [A]ction')
-        map('n', '<leader>so', '<cmd>Lspsaga outline<CR>', '[S]ymbol [O]utline')
+        map('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+        map('n', 'gd', function()
+          require('snacks.picker').lsp_definitions { focus = 'list' }
+        end, '[G]o to [D]efinition')
+        map('n', 'gD', function()
+          require('snacks.picker').lsp_declarations { focus = 'list' }
+        end, '[G]o to [D]eclaration')
+        map('n', 'gt', function()
+          require('snacks.picker').lsp_type_definitions { focus = 'list' }
+        end, '[G]o to [T]ype definition')
+        map('n', 'gi', function()
+          require('snacks.picker').lsp_implementations { focus = 'list' }
+        end, '[G]o to [I]mplementation')
+        map('n', 'gr', function()
+          require('snacks.picker').lsp_references { focus = 'list' }
+        end, '[G]o to [R]eferences')
+        map('n', '<leader>so', function()
+          require('snacks.picker').lsp_symbols { focus = 'list' }
+        end, '[S]ymbol [O]utline')
       end
 
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -126,14 +137,6 @@ return {
         'gopls',
         'vtsls',
       },
-    },
-  },
-  {
-    'glepnir/lspsaga.nvim',
-    opts = {
-      ui = { code_action = ' ' },
-      lightbulb = { enable = false },
-      symbol_in_winbar = { enable = false },
     },
   },
 }
