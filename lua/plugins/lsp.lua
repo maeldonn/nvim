@@ -72,7 +72,7 @@ return {
         end
 
         map('n', 'K', vim.lsp.buf.hover, 'Hover documentation')
-        map('n', 'grn', vim.lsp.buf.rename, 'Rename')
+        map('n', 'gr', vim.lsp.buf.rename, 'Rename')
         map('n', '[d', vim.diagnostic.get_prev, 'Previous diagnostic')
         map('n', '[d', vim.diagnostic.get_next, 'Next diagnostic')
         map('i', '<C-h>', vim.lsp.buf.signature_help, 'Signature help')
@@ -89,9 +89,9 @@ return {
         map('n', 'gi', function()
           require('snacks.picker').lsp_implementations { focus = 'list', layout = 'ivy' }
         end, '[G]o to [I]mplementation')
-        map('n', 'gr', function()
+        map('n', 'gu', function()
           require('snacks.picker').lsp_references { focus = 'list', layout = 'ivy' }
-        end, '[G]o to [R]eferences')
+        end, '[G]o to [U]sages (references)')
         map('n', '<leader>so', function()
           require('snacks.picker').lsp_symbols { focus = 'list', layout = 'right' }
         end, '[S]ymbol [O]utline')
