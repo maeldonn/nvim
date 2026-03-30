@@ -1,142 +1,70 @@
-return {
-  {
-    'saghen/blink.cmp',
-    version = '1.*',
-    dependencies = {
-      { 'onsails/lspkind-nvim' },
-      {
-        'L3MON4D3/LuaSnip',
-        version = 'v2.*',
-        build = 'make install_jsregexp',
-        dependencies = { 'rafamadriz/friendly-snippets' },
-        config = function()
-          require('luasnip').setup()
-          require('luasnip.loaders.from_vscode').lazy_load()
-        end,
-      },
-    },
-    opts = {
-      snippets = { preset = 'luasnip' },
-      completion = {
-        menu = {
-          draw = {
-            components = {
-              kind_icon = {
-                text = function(ctx)
-                  local icon = ctx.kind_icon
-                  if vim.tbl_contains({ 'Path' }, ctx.source_name) then
-                    local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
-                    if dev_icon then
-                      icon = dev_icon
-                    end
-                  else
-                    icon = require('lspkind').symbolic(ctx.kind, {
-                      mode = 'symbol',
-                    })
-                  end
+vim.pack.add {
+  'https://github.com/neovim/nvim-lspconfig',
+  'https://github.com/mason-org/mason.nvim',
+  'https://github.com/mason-org/mason-lspconfig.nvim',
+}
 
-                  return icon .. ctx.icon_gap
-                end,
-
-                -- Optionally, use the highlight groups from nvim-web-devicons
-                -- You can also add the same function for `kind.highlight` if you want to
-                -- keep the highlight groups in sync with the icons.
-                highlight = function(ctx)
-                  local hl = ctx.kind_hl
-                  if vim.tbl_contains({ 'Path' }, ctx.source_name) then
-                    local dev_icon, dev_hl = require('nvim-web-devicons').get_icon(ctx.label)
-                    if dev_icon then
-                      hl = dev_hl
-                    end
-                  end
-                  return hl
-                end,
-              },
-            },
-          },
-        },
-      },
-      keymap = {
-        preset = 'enter',
-      },
-    },
+require('mason').setup {}
+require('mason-lspconfig').setup {
+  ensure_installed = {
+    'lua_ls',
+    'gopls',
+    'vtsls',
   },
-  {
-    'neovim/nvim-lspconfig',
-    cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      local function setup_keymaps(bufnr)
-        local function map(mode, lhs, rhs, desc)
-          vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
-        end
+}
 
-        map('n', 'K', vim.lsp.buf.hover, 'Hover documentation')
-        map('n', 'gr', vim.lsp.buf.rename, 'Rename')
-        map('n', '[d', vim.diagnostic.get_prev, 'Previous diagnostic')
-        map('n', '[d', vim.diagnostic.get_next, 'Next diagnostic')
-        map('i', '<C-h>', vim.lsp.buf.signature_help, 'Signature help')
-        map('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-        map('n', 'gd', function()
-          require('snacks.picker').lsp_definitions { focus = 'list', layout = 'ivy' }
-        end, '[G]o to [D]efinition')
-        map('n', 'gD', function()
-          require('snacks.picker').lsp_declarations { focus = 'list', layout = 'ivy' }
-        end, '[G]o to [D]eclaration')
-        map('n', 'gt', function()
-          require('snacks.picker').lsp_type_definitions { focus = 'list', layout = 'ivy' }
-        end, '[G]o to [T]ype definition')
-        map('n', 'gi', function()
-          require('snacks.picker').lsp_implementations { focus = 'list', layout = 'ivy' }
-        end, '[G]o to [I]mplementation')
-        map('n', 'gu', function()
-          require('snacks.picker').lsp_references { focus = 'list', layout = 'ivy' }
-        end, '[G]o to [U]sages (references)')
-        map('n', '<leader>so', function()
-          require('snacks.picker').lsp_symbols { focus = 'list', layout = 'right' }
-        end, '[S]ymbol [O]utline')
-      end
+local function setup_keymaps(bufnr)
+  local function map(mode, lhs, rhs, desc)
+    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
+  end
 
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
-        callback = function(args)
-          local bufnr = args.buf
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if not client then
-            return
-          end
+  map('n', 'K', vim.lsp.buf.hover, 'Hover documentation')
+  map('n', 'gr', vim.lsp.buf.rename, 'Rename')
+  map('n', '[d', vim.diagnostic.get_prev, 'Previous diagnostic')
+  map('n', '[d', vim.diagnostic.get_next, 'Next diagnostic')
+  map('i', '<C-h>', vim.lsp.buf.signature_help, 'Signature help')
+  map('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  map('n', 'gd', function()
+    require('snacks.picker').lsp_definitions { focus = 'list', layout = 'ivy' }
+  end, '[G]o to [D]efinition')
+  map('n', 'gD', function()
+    require('snacks.picker').lsp_declarations { focus = 'list', layout = 'ivy' }
+  end, '[G]o to [D]eclaration')
+  map('n', 'gt', function()
+    require('snacks.picker').lsp_type_definitions { focus = 'list', layout = 'ivy' }
+  end, '[G]o to [T]ype definition')
+  map('n', 'gi', function()
+    require('snacks.picker').lsp_implementations { focus = 'list', layout = 'ivy' }
+  end, '[G]o to [I]mplementation')
+  map('n', 'gu', function()
+    require('snacks.picker').lsp_references { focus = 'list', layout = 'ivy' }
+  end, '[G]o to [U]sages (references)')
+  map('n', '<leader>so', function()
+    require('snacks.picker').lsp_symbols { focus = 'list', layout = 'right' }
+  end, '[S]ymbol [O]utline')
+end
 
-          setup_keymaps(bufnr)
-        end,
-      })
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then
+      return
+    end
 
-      vim.diagnostic.config {
-        virtual_text = true,
-        signs = {
-          text = {
-            [vim.diagnostic.severity.ERROR] = '✘',
-            [vim.diagnostic.severity.WARN] = '▲',
-            [vim.diagnostic.severity.HINT] = '⚑',
-            [vim.diagnostic.severity.INFO] = '»',
-          },
-        },
-      }
-    end,
-  },
-  {
-    'mason-org/mason-lspconfig.nvim',
-    dependencies = {
-      {
-        'mason-org/mason.nvim',
-        config = true,
-      },
-    },
-    opts = {
-      ensure_installed = {
-        'lua_ls',
-        'gopls',
-        'vtsls',
-      },
+    setup_keymaps(bufnr)
+  end,
+})
+
+vim.diagnostic.config {
+  virtual_text = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '✘',
+      [vim.diagnostic.severity.WARN] = '▲',
+      [vim.diagnostic.severity.HINT] = '⚑',
+      [vim.diagnostic.severity.INFO] = '»',
     },
   },
 }

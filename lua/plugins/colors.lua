@@ -1,16 +1,12 @@
-return {
-  {
-    'catppuccin/nvim',
-    lazy = false,
-    priority = 1000,
-    init = function()
-      vim.cmd.colorscheme 'catppuccin-macchiato'
-    end,
-    config = function()
-      require('catppuccin').setup { flavour = 'macchiato' }
-    end,
-  },
-  { 'gruvbox-community/gruvbox' },
-  { 'folke/tokyonight.nvim' },
-  { 'rose-pine/neovim' },
+vim.pack.add {
+  'https://github.com/catppuccin/nvim',
+  'https://github.com/gruvbox-community/gruvbox',
+  'https://github.com/folke/tokyonight.nvim',
+  'https://github.com/rose-pine/neovim',
 }
+
+require('catppuccin').setup {
+  flavour = 'macchiato',
+}
+
+vim.cmd.colorscheme 'catppuccin'

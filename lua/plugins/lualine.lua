@@ -1,4 +1,3 @@
-return {
-  'nvim-lualine/lualine.nvim',
-  config = true,
-}
+vim.pack.add { 'https://github.com/nvim-lualine/lualine.nvim' }
+
+require('lualine').setup {}

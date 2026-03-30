@@ -1,5 +1,3 @@
-return {
-  'nvim-mini/mini.pairs',
-  event = 'VeryLazy',
-  config = true,
-}
+vim.pack.add { 'https://github.com/nvim-mini/mini.pairs' }
+
+require('mini.pairs').setup {}

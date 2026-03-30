@@ -1,23 +1,19 @@
-return {
-  'mfussenegger/nvim-lint',
-  event = { 'BufReadPre', 'BufNewFile' },
-  config = function()
-    local lint = require 'lint'
+vim.pack.add { 'https://github.com/mfussenegger/nvim-lint' }
 
-    lint.linters_by_ft = {
-      go = { 'golangcilint' },
-      javascript = { 'eslint_d' },
-      typescript = { 'eslint_d' },
-    }
+local lint = require 'lint'
 
-    local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
-    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
-      group = lint_augroup,
-      callback = function()
-        if vim.opt_local.modifiable:get() then
-          lint.try_lint()
-        end
-      end,
-    })
-  end,
+lint.linters_by_ft = {
+  go = { 'golangcilint' },
+  javascript = { 'eslint_d' },
+  typescript = { 'eslint_d' },
 }
+
+local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
+  group = lint_augroup,
+  callback = function()
+    if vim.opt_local.modifiable:get() then
+      lint.try_lint()
+    end
+  end,
+})

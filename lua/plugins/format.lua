@@ -1,45 +1,36 @@
-return {
-  {
-    'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { lsp_fallback = true, async = false, timeout_ms = 1000 }
-        end,
-        mode = '',
-        desc = '[F]ormat buffer or selection',
-      },
-    },
-    opts = {
-      format_on_save = function(bufnr)
-        local allowed_filetypes = { go = true, lua = true }
-        local ft = vim.bo[bufnr].filetype
+vim.pack.add {
+  'https://github.com/stevearc/conform.nvim',
+  'https://github.com/NMAC427/guess-indent.nvim',
+}
 
-        if not allowed_filetypes[ft] then
-          return
-        end
+require('guess-indent').setup {}
 
-        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-          return
-        end
+local conform = require 'conform'
+conform.setup {
+  format_on_save = function(bufnr)
+    local allowed_filetypes = { go = true, lua = true }
+    local ft = vim.bo[bufnr].filetype
 
-        return { timeout_ms = 500, lsp_format = 'fallback' }
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        go = { 'goimports', 'gci', 'gofmt' },
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd', 'prettier', stop_after_first = true },
-        md = { 'prettier' },
-        json = { 'prettier' },
-      },
-    },
-  },
-  {
-    'NMAC427/guess-indent.nvim',
-    config = true,
+    if not allowed_filetypes[ft] then
+      return
+    end
+
+    if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+      return
+    end
+
+    return { timeout_ms = 500, lsp_format = 'fallback' }
+  end,
+  formatters_by_ft = {
+    lua = { 'stylua' },
+    go = { 'goimports', 'gci', 'gofmt' },
+    javascript = { 'prettierd', 'prettier', stop_after_first = true },
+    typescript = { 'prettierd', 'prettier', stop_after_first = true },
+    md = { 'prettier' },
+    json = { 'prettier' },
   },
 }
+
+vim.keymap.set('n', '<leader>f', function()
+  conform.format { lsp_fallback = true, async = false, timeout_ms = 1000 }
+end, { desc = '[F]ormat buffer or selection' })
