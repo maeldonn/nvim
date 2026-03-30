@@ -4,7 +4,7 @@ return {
     lazy = false,
     priority = 1000,
     init = function()
-      vim.cmd.colorscheme 'catppuccin'
+      vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
     config = function()
       require('catppuccin').setup { flavour = 'macchiato' }

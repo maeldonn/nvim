@@ -3,11 +3,11 @@
 Opinionated Neovim setup optimized for Go, Node, and Lua, with fast navigation. Uses lazy-loading for snappy startup and a curated plugin set for LSP, treesitter, search, Git, and file navigation.
 
 ## Requirements
-- `neovim` ≥ 0.11
+- `neovim` ≥ 0.12
 - Nerd Font installed (for icons)
 - Tree-sitter parsers: run `:TSUpdate`
 - Optional (Go): `go` ≥ 1.20 for `gopls`
-- ripgrep binary for telescope
+- ripgrep and fd binaries for snacks
 - tree-sitter-cli binary
 
 ## Install
