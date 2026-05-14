@@ -24,6 +24,7 @@ require('nvim-treesitter').install {
   'vim',
   'lua',
   'bash',
+  'rust',
   'go',
   'gomod',
   'gosum',

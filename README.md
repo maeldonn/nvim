@@ -1,6 +1,6 @@
 # Maël's Neovim Config
 
-Opinionated Neovim setup optimized for Go, Node, and Lua, with fast navigation. Uses lazy-loading for snappy startup and a curated plugin set for LSP, treesitter, search, Git, and file navigation.
+Opinionated Neovim setup optimized for Go, Rust, Node, and Lua, with fast navigation. Uses lazy-loading for snappy startup and a curated plugin set for LSP, treesitter, search, Git, and file navigation.
 
 ## Requirements
 - `neovim` ≥ 0.12

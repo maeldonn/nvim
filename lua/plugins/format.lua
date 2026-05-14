@@ -8,7 +8,7 @@ require('guess-indent').setup {}
 local conform = require 'conform'
 conform.setup {
   format_on_save = function(bufnr)
-    local allowed_filetypes = { go = true, lua = true }
+    local allowed_filetypes = { go = true, rust = true, lua = true }
     local ft = vim.bo[bufnr].filetype
 
     if not allowed_filetypes[ft] then
@@ -24,6 +24,7 @@ conform.setup {
   formatters_by_ft = {
     lua = { 'stylua' },
     go = { 'goimports', 'gci', 'gofmt' },
+    rust = { 'rustfmt' },
     javascript = { 'prettierd', 'prettier', stop_after_first = true },
     typescript = { 'prettierd', 'prettier', stop_after_first = true },
     md = { 'prettier' },
