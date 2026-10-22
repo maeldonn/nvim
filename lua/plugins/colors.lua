@@ -6,7 +6,7 @@ vim.pack.add {
 }
 
 require('catppuccin').setup {
-  flavour = 'macchiato',
+  flavour = 'latte',
 }
 
 vim.cmd.colorscheme 'catppuccin'
